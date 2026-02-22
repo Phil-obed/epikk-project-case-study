@@ -11,7 +11,7 @@
     --bg2: #0d0d0d;
     --gold: #f0b429;
     --gold2: #ffd04a;
-    --white: #f0ede6;
+    --white: #ffffff;
     --muted: #5a5a5a;
     --border: #1c1c1c;
   }
@@ -55,6 +55,13 @@
   body:has(.project-card:hover) .cursor { width: 18px; height: 18px; }
   body:has(a:hover) .cursor-ring,
   body:has(.project-card:hover) .cursor-ring { width: 56px; height: 56px; border-color: var(--gold); }
+
+    .hero-logo {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    display: block;
+  }
 
   /* ── NAV ── */
   nav {
@@ -106,7 +113,7 @@
     font-size: 12px;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: #666;
+    color: #dddddd;
     text-decoration: none;
     transition: color 0.3s;
   }
@@ -129,6 +136,12 @@
 
   /* ── HERO ── */
   .hero {
+    background: 
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url("banner.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     position: relative;
     min-height: 100vh;
     display: flex;
@@ -238,7 +251,7 @@
 
   .hero-desc {
     font-size: 16px;
-    color: #777;
+    color: #c7c7c7;
     font-weight: 300;
     line-height: 1.75;
     max-width: 420px;
@@ -312,10 +325,10 @@
 
   .stat-label {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
+    font-size: 15px;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: #555;
+    color: #bbbbbb;
   }
 
   /* ── SECTION HEADER ── */
@@ -329,7 +342,7 @@
 
   .section-label {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 10px;
+    font-size: 15px;
     letter-spacing: 5px;
     color: var(--gold);
     text-transform: uppercase;
@@ -370,15 +383,15 @@
     letter-spacing: 3px;
     text-transform: uppercase;
     padding: 9px 20px;
-    border: 1px solid #222;
+    border: 1px solid #6d6d6d;
     border-radius: 2px;
     background: none;
-    color: #555;
+    color: #d4d4d4;
     cursor: pointer;
     transition: all 0.25s;
   }
 
-  .filter-btn:hover { border-color: #444; color: #999; }
+  .filter-btn:hover { border-color: var(--gold); color: rgb(197, 197, 197); }
   .filter-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(240,180,41,0.05); }
 
   /* ── PROJECT GRID ── */
@@ -471,7 +484,7 @@
 
   .card-excerpt {
     font-size: 13px;
-    color: #888;
+    color: #dddddd;
     font-weight: 300;
     line-height: 1.6;
     max-height: 0;
@@ -558,7 +571,7 @@
 
   .about-body {
     font-size: 15px;
-    color: #666;
+    color: #ffffff;
     font-weight: 300;
     line-height: 1.8;
     max-width: 500px;
@@ -576,8 +589,8 @@
     font-size: 10px;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: #555;
-    border: 1px solid #222;
+    color: #dddddd;
+    border: 1px solid #414141;
     padding: 7px 16px;
     border-radius: 2px;
     transition: border-color 0.3s, color 0.3s;
@@ -624,7 +637,7 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: 15px;
     letter-spacing: 4px;
-    color: #2a2a2a;
+    color: #535353;
     text-transform: uppercase;
     flex-shrink: 0;
   }
@@ -661,7 +674,7 @@
 
   .footer-tagline {
     font-size: 14px;
-    color: #444;
+    color: #818181;
     font-weight: 300;
     margin-top: 12px;
     max-width: 260px;
@@ -706,7 +719,7 @@
 
   .footer-copy {
     font-size: 11px;
-    color: #2e2e2e;
+    color: #585858;
     letter-spacing: 1px;
   }
 
@@ -1009,7 +1022,7 @@
 <nav id="nav">
   <a href="https://www.epikk.co" class="logo-link">
     <div class="logo-icon">
-      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <img src="logo-white.png" alt="Company Logo" class="hero-logo">
         <rect width="36" height="36" rx="4" fill="#151515"/>
         <circle cx="13" cy="13" r="4" stroke="#f0b429" stroke-width="1.5"/>
         <circle cx="23" cy="13" r="4" stroke="#f0b429" stroke-width="1.5"/>
@@ -1053,7 +1066,7 @@
   <div class="hero-glow"></div>
   <div class="hero-ghost">ePikk</div>
 
-  <div class="hero-eyebrow">Robotics &amp; Automation Engineering</div>
+  <div class="hero-eyebrow">Product Development &amp; Robotics Engineering</div>
 
   <h1>
     We Build<br>
@@ -1080,19 +1093,41 @@
   </div>
   <div class="stat">
     <div class="stat-number" data-count="6">0</div>
-    <div class="stat-label">Industries Served</div>
+    <div class="stat-label">Active Schools</div>
   </div>
   <div class="stat">
     <div class="stat-number" data-count="98">0</div>
     <div class="stat-label">Uptime Accuracy %</div>
   </div>
   <div class="stat">
-    <div class="stat-number" data-count="3">0</div>
-    <div class="stat-label">Countries Active</div>
+    <div class="stat-number" data-count="150">0</div>
+    <div class="stat-label">Students trained</div>
   </div>
 </div>
 
 <!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marqueeTrack">
+    <!-- doubled for seamless loop -->
+    <span class="marquee-item">Robotic Arm Design <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Embedded Systems <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Kinematics Modelling <span class="marquee-dot"></span></span>
+    <span class="marquee-item">RTOS Architecture <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Computer Vision <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Mobile Platforms <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Precision Actuation <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Control Systems <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Robotic Arm Design <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Embedded Systems <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Kinematics Modelling <span class="marquee-dot"></span></span>
+    <span class="marquee-item">RTOS Architecture <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Computer Vision <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Mobile Platforms <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Precision Actuation <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Control Systems <span class="marquee-dot"></span></span>
+  </div>
+</div>
+
 <div class="marquee-section">
   <div class="marquee-track" id="marqueeTrack">
     <!-- doubled for seamless loop -->
@@ -1135,8 +1170,8 @@
   <div class="projects-grid reveal-stagger" id="projectsGrid">
 
     <!-- 01 — FEATURED -->
-    <a class="project-card featured" href="epikk-casestudy.html" data-category="rail">
-      <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80" alt="Railway Sleeper System">
+    <a class="project-card featured" href="https://phil-obed.github.io/case-study_Sleepers-robot-arm/" data-category="rail">
+      <img src="https://images.unsplash.com/photo-1484271201072-03bfd82a56f6?q=80&w=1470" alt="Railway Sleeper System">
       <div class="card-gradient"></div>
       <div class="card-index">01</div>
       <div class="card-arrow">
@@ -1150,7 +1185,7 @@
     </a>
 
     <!-- 02 -->
-    <a class="project-card" href="#" data-category="industrial">
+    <a class="project-card" href="https://phil-obed.github.io/case-study_6dof-robot-arm/" data-category="industrial">
       <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=800&q=80" alt="6-DOF Welding Arm">
       <div class="card-gradient"></div>
       <div class="card-index">02</div>
@@ -1165,7 +1200,7 @@
     </a>
 
     <!-- 03 -->
-    <a class="project-card" href="#" data-category="logistics">
+    <a class="project-card" href="https://phil-obed.github.io/case-study_lift" data-category="logistics">
       <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80" alt="AMR Warehouse">
       <div class="card-gradient"></div>
       <div class="card-index">03</div>
@@ -1195,7 +1230,7 @@
     </a>
 
     <!-- 05 -->
-    <a class="project-card tall" href="#" data-category="medical">
+    <a class="project-card tall" href="https://phil-obed.github.io/case-study_syring-pump" data-category="medical">
       <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=800&q=80" alt="Surgical Assist Robot">
       <div class="card-gradient"></div>
       <div class="card-index">05</div>
@@ -1210,7 +1245,7 @@
     </a>
 
     <!-- 06 -->
-    <a class="project-card" href="#" data-category="industrial">
+    <!-- <a class="project-card" href="#" data-category="industrial">
       <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80" alt="Embedded Control">
       <div class="card-gradient"></div>
       <div class="card-index">06</div>
@@ -1222,10 +1257,10 @@
         <div class="card-title">RTOS-Based Multi-Axis Conveyor Control</div>
         <div class="card-excerpt">Real-time OS architecture managing 12 independent conveyor axes with deterministic fault recovery logic.</div>
       </div>
-    </a>
+    </a> -->
 
     <!-- 07 -->
-    <a class="project-card" href="#" data-category="logistics">
+    <!-- <a class="project-card" href="#" data-category="logistics">
       <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80" alt="Drone Delivery">
       <div class="card-gradient"></div>
       <div class="card-index">07</div>
@@ -1237,10 +1272,10 @@
         <div class="card-title">UAV Last-Mile Delivery System</div>
         <div class="card-excerpt">Fully autonomous drone system with payload-adaptive flight planning and precision landing on uneven terrain.</div>
       </div>
-    </a>
+    </a> -->
 
     <!-- 08 -->
-    <a class="project-card" href="#" data-category="rail">
+    <!-- <a class="project-card" href="#" data-category="rail">
       <img src="https://images.unsplash.com/photo-1581093588401-fbb62a02f120?w=800&q=80" alt="Track Inspection">
       <div class="card-gradient"></div>
       <div class="card-index">08</div>
@@ -1252,10 +1287,10 @@
         <div class="card-title">Autonomous Rail Track Inspection Robot</div>
         <div class="card-excerpt">Self-propelled inspection platform with LiDAR and thermal imaging for continuous structural assessment of rail lines.</div>
       </div>
-    </a>
+    </a> -->
 
     <!-- 09 -->
-    <a class="project-card" href="#" data-category="agriculture">
+    <!-- <a class="project-card" href="#" data-category="agriculture">
       <img src="https://images.unsplash.com/photo-1535379453347-1ffd615e2e08?w=800&q=80" alt="Irrigation Robot">
       <div class="card-gradient"></div>
       <div class="card-index">09</div>
@@ -1267,7 +1302,7 @@
         <div class="card-title">Smart Precision Irrigation Platform</div>
         <div class="card-excerpt">Soil-moisture-responsive mobile platform delivering micro-dosing irrigation with GPS field-mapping integration.</div>
       </div>
-    </a>
+    </a> -->
 
   </div>
 </section>
@@ -1280,7 +1315,7 @@
       Engineering systems that <em>think</em>, move, and <em>deliver</em>.
     </div>
     <p class="about-body">
-      ePikk is an engineering studio specialising in the design and deployment of robotic and automation systems. We take a first-principles approach — from concept and kinematics to embedded firmware and field deployment — building machines that perform reliably in demanding real-world environments.
+      EPIKK ENGINEERING is a creative engineering studio that blends design, technology, and innovation to deliver innovative solutions that drive measurable value.  
     </p>
     <div class="about-tags">
       <span class="about-tag">Mechanical Design</span>
@@ -1308,11 +1343,11 @@
     <div class="footer-brand">
       <a href="https://www.epikk.co" target="_blank" class="logo-link">
         <div class="logo-icon">
-          <svg viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="4" fill="#151515"/><circle cx="13" cy="13" r="4" stroke="#f0b429" stroke-width="1.5"/><circle cx="23" cy="13" r="4" stroke="#f0b429" stroke-width="1.5"/><circle cx="13" cy="23" r="4" stroke="#f0b429" stroke-width="1.5"/><circle cx="23" cy="23" r="4" stroke="#f0ede6" stroke-width="1.5"/></svg>
+        <img src="logo-white.png" alt="Company Logo" class="hero-logo">  
         </div>
         <span class="logo-text">ePikk</span>
       </a>
-      <p class="footer-tagline">Robotics & Automation Engineering — Built to perform where it counts.</p>
+      <p class="footer-tagline">Product Development — Built to perform where it counts.</p>
     </div>
 
     <div class="footer-socials">
