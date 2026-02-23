@@ -627,7 +627,12 @@
     gap: 80px;
     animation: marquee 28s linear infinite;
     white-space: nowrap;
+    width: max-content;
   }
+
+.marquee-section:hover .marquee-track {
+  animation-play-state: paused;
+}
 
   .marquee-item {
     display: inline-flex;
@@ -659,15 +664,6 @@
   filter: grayscale(0%);
   opacity: 1;
 }
-
-  .marquee-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--gold);
-    opacity: 0.5;
-    flex-shrink: 0;
-  }
 
   @keyframes marquee {
     from { transform: translateX(0); }
@@ -1052,9 +1048,9 @@
   </a>
 
   <ul class="nav-links">
-    <li><a href="#" class="active">Work</a></li>
-    <li><a href="#">Services</a></li>
-    <li><a href="#">About</a></li>
+    <li><a href="#" class="active">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="https://epikk.co/#services">Services</a></li>
     <li><a href="https://www.epikk.co" target="_blank" class="nav-cta">Get in Touch</a></li>
   </ul>
 
@@ -1087,9 +1083,9 @@
   <div class="hero-eyebrow">Product Development &amp; Robotics Engineering</div>
 
   <h1>
-    We Build<br>
-    <span class="line2">Machines</span><br>
-    That Work
+    epikk<br>
+    <span class="line2">Projects</span><br>
+    catalog
   </h1>
 
   <div class="hero-sub">
@@ -1110,12 +1106,12 @@
     <div class="stat-label">Projects Delivered</div>
   </div>
   <div class="stat">
-    <div class="stat-number" data-count="6">0</div>
-    <div class="stat-label">Active Schools</div>
+    <div class="stat-number" data-count="8">0</div>
+    <div class="stat-label">Active Institutions</div>
   </div>
   <div class="stat">
     <div class="stat-number" data-count="98">0</div>
-    <div class="stat-label">Uptime Accuracy %</div>
+    <div class="stat-label">Objectives Achieved %</div>
   </div>
   <div class="stat">
     <div class="stat-number" data-count="150">0</div>
@@ -1152,7 +1148,7 @@
     <span>University for Development Studies</span>
   </div>
   <div class="marquee-item">
-    <img src="logos/umt.png" alt="UMT">
+    <img src="logos/umat.png" alt="UMT">
     <span>University for Mines and Technology</span>
   </div>
   <div class="marquee-item">
@@ -1184,7 +1180,7 @@
     <span>University for Development Studies</span>
   </div>
   <div class="marquee-item">
-    <img src="logos/umt.png" alt="UMT">
+    <img src="logos/umat.png" alt="UMT">
     <span>University for Mines and Technology</span>
   </div>
   <div class="marquee-item">
@@ -1353,7 +1349,7 @@
 </section>
 
 <!-- ABOUT STRIP -->
-<div class="about-strip">
+<div class="about-strip" id="about">
   <div class="about-left reveal">
     <div class="section-label">Who We Are</div>
     <div class="about-quote">
@@ -1392,7 +1388,7 @@
         </div>
         <span class="logo-text">ePikk</span>
       </a>
-      <p class="footer-tagline">Product Development — Built to perform where it counts.</p>
+      <p class="footer-tagline">Products — Built to perform where it counts.</p>
     </div>
 
     <div class="footer-socials">
