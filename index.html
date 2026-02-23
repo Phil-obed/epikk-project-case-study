@@ -624,7 +624,7 @@
 
   .marquee-track {
     display: flex;
-    gap: 0;
+    gap: 80px;
     animation: marquee 28s linear infinite;
     white-space: nowrap;
   }
@@ -635,12 +635,30 @@
     gap: 28px;
     padding: 0 28px;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 15px;
+    font-size: 20px;
     letter-spacing: 4px;
     color: #535353;
     text-transform: uppercase;
     flex-shrink: 0;
   }
+
+  .marquee-item:hover{
+  color: var(--gold);
+  opacity: 1;
+}
+
+
+  .marquee-item img {
+  height: 70px;
+  filter: grayscale(50%);
+  opacity: 0.7;
+  transition: 0.3s ease;
+}
+
+.marquee-item:hover img {
+  filter: grayscale(0%);
+  opacity: 1;
+}
 
   .marquee-dot {
     width: 5px;
@@ -1108,46 +1126,73 @@
 <!-- MARQUEE -->
 <div class="marquee-section">
   <div class="marquee-track" id="marqueeTrack">
-    <!-- doubled for seamless loop -->
-    <span class="marquee-item">Robotic Arm Design <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Embedded Systems <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Kinematics Modelling <span class="marquee-dot"></span></span>
-    <span class="marquee-item">RTOS Architecture <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Computer Vision <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Mobile Platforms <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Precision Actuation <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Control Systems <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Robotic Arm Design <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Embedded Systems <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Kinematics Modelling <span class="marquee-dot"></span></span>
-    <span class="marquee-item">RTOS Architecture <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Computer Vision <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Mobile Platforms <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Precision Actuation <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Control Systems <span class="marquee-dot"></span></span>
-  </div>
-</div>
 
-<div class="marquee-section">
-  <div class="marquee-track" id="marqueeTrack">
-    <!-- doubled for seamless loop -->
-    <span class="marquee-item">Robotic Arm Design <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Embedded Systems <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Kinematics Modelling <span class="marquee-dot"></span></span>
-    <span class="marquee-item">RTOS Architecture <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Computer Vision <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Mobile Platforms <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Precision Actuation <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Control Systems <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Robotic Arm Design <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Embedded Systems <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Kinematics Modelling <span class="marquee-dot"></span></span>
-    <span class="marquee-item">RTOS Architecture <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Computer Vision <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Mobile Platforms <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Precision Actuation <span class="marquee-dot"></span></span>
-    <span class="marquee-item">Control Systems <span class="marquee-dot"></span></span>
+  <div class="marquee-item">
+    <img src="logos/leg.png" alt="University of Ghana">
+    <span>University of Ghana</span>
   </div>
+  <div class="marquee-item">
+    <img src="logos/knust.png" alt="KNUST">
+    <span>KNUST</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/ucc.png" alt="UCC">
+    <span>University of Cape Coast</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/win.png" alt="UEW">
+    <span>University of Education, Winneba</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/uenr.png" alt="UENR">
+    <span>University of Energy & Natural Resources</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/uds.png" alt="UDS">
+    <span>University for Development Studies</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/umt.png" alt="UMT">
+    <span>University for Mines and Technology</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/ttu.png" alt="TTU">
+    <span>Takoradi Technical University</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/leg.png" alt="University of Ghana">
+    <span>University of Ghana</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/knust.png" alt="KNUST">
+    <span>KNUST</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/ucc.png" alt="UCC">
+    <span>University of Cape Coast</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/win.png" alt="UEW">
+    <span>University of Education, Winneba</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/uenr.png" alt="UENR">
+    <span>University of Energy & Natural Resources</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/uds.png" alt="UDS">
+    <span>University for Development Studies</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/umt.png" alt="UMT">
+    <span>University for Mines and Technology</span>
+  </div>
+  <div class="marquee-item">
+    <img src="logos/ttu.png" alt="TTU">
+    <span>Takoradi Technical University</span>
+  </div>
+
+</div>
 </div>
 
 <!-- PROJECTS -->
