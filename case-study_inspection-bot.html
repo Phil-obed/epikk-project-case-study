@@ -71,7 +71,7 @@
   .hero {
     background: 
     linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-    url("kin.png");
+    url("case/0.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -709,7 +709,7 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
           <div class="phase-title">Problem Definition &amp; System Requirements</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(1)">
-          <img src="strat.jpg" alt="Problem Definition">
+          <img src="case/1.jpg" alt="Problem Definition">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
@@ -730,7 +730,7 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
           <div class="phase-title">Mechanical Design &amp; 3D Modeling</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(2)">
-          <img src="2.png" alt="Mechanical Design">
+          <img src="case/22.png" alt="Mechanical Design">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
@@ -751,7 +751,7 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
           <div class="phase-title">Electronics Architecture &amp; PCB Design</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(3)">
-          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Electronics Architecture">
+          <img src="case/pcb.PNG" alt="Electronics Architecture">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
@@ -772,7 +772,7 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
           <div class="phase-title">Embedded Systems &amp; Autonomous Control</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(4)">
-          <img src="kin.png" alt="Embedded Systems">
+          <img src="case/3.png" alt="Embedded Systems">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
@@ -793,7 +793,7 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
           <div class="phase-title">Gas Detection &amp; Calibration</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(5)">
-          <img src="fin.png" alt="Gas Detection">
+          <img src="case/gass.png" alt="Gas Detection">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
@@ -814,7 +814,7 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
           <div class="phase-title">Thermal Imaging &amp; Leak Localization</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(6)">
-          <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80" alt="Thermal Imaging">
+          <img src="case/t.png" alt="Thermal Imaging">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
@@ -835,7 +835,7 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
           <div class="phase-title">Navigation, Mapping &amp; GPS Integration</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(7)">
-          <img src="https://images.unsplash.com/photo-1569163139394-de4798aa62b3?w=600&q=80" alt="Navigation Mapping">
+          <img src="case/gp.png" alt="Navigation Mapping">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
@@ -856,7 +856,7 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
           <div class="phase-title">Web Interface &amp; Remote Command System</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(8)">
-          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80" alt="Web Interface">
+          <img src="case/5.png" alt="Web Interface">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
@@ -953,42 +953,42 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
   /* Phase data */
   const phases = {
     1: {
-      img: 'strat.jpg',
+      img: 'case/1.jpg',
       title: 'Problem Definition System Requirements',
       text: 'Before touching hardware, the problem was framed properly. We defined target gases to detect (combustible and hazardous industrial gases), acceptable detection threshold (ppm sensitivity target), maximum response time, required localization accuracy, operating temperature range inside plant environments, and communication range constraints. The core system objectives became: detect abnormal gas concentration, pinpoint the exact physical source of the leak, map and log the leak location, and stream live inspection data remotely. The project shifted from "gas detection robot" to autonomous leak intelligence system.'
     },
     2: {
-      img: '2.png',
+      img: 'case/22.png',
       title: 'Mechanical Design 3D Modeling',
       text: 'The robot was modeled entirely in CAD before fabrication. Design considerations included a 4-wheel differential drive for stability on industrial flooring, low center of gravity to prevent tipping near equipment, enclosed electronics housing for heat and dust resistance, elevated sensor mast for better gas sampling, and thermal camera mounting angle optimization. Gas sensors were positioned strategically to ensure exposure to ambient airflow while being protected from direct mechanical damage. The chassis was dimensioned to balance maneuverability with battery capacity and onboard processing space. No random placements—every sensor position had a reason.'
     },
     3: {
-      img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=85',
+      img: 'case/pcb.png',
       title: 'Electronics Architecture PCB Design',
       text: 'Instead of messy wiring, a custom PCB architecture was developed to ensure reliability. The PCB integrated a microcontroller/embedded processing unit, MQ gas sensor array interface, analog signal conditioning circuitry, motor driver stages, voltage regulation modules, thermal camera communication interface, GPS module, and wireless communication module. Gas sensors like MQ-series devices produce analog signals highly sensitive to noise, so signal conditioning circuits were implemented to stabilize voltage supply, filter electrical noise, and improve ADC accuracy. Power segregation ensured motor switching noise did not corrupt sensor readings. Industrial reliability begins at the PCB level.'
     },
     4: {
-      img: 'kin.png',
+      img: 'case/3.png',
       title: 'Embedded Systems Autonomous Control',
       text: 'The firmware layer handled real-time gas concentration monitoring, threshold-based alert triggering, motion control using encoder feedback, autonomous patrol routines, obstacle handling logic, and GPS coordinate tagging. Wheel displacement tracking followed X=rθ, allowing gas concentration spikes to be mapped to physical coordinates. When abnormal gas levels exceeded calibrated thresholds, the robot automatically slowed down and initiated thermal scanning mode. This prevented overshooting potential leak sources and enabled precise localization.'
     },
     5: {
-      img: 'fin.png',
+      img: 'case/gas.png',
       title: 'Gas Detection Calibration',
       text: 'MQ sensors are powerful but unreliable without calibration. Calibration involved baseline ambient air sampling, controlled gas exposure testing, sensitivity curve mapping, and temperature compensation adjustments. Sensor outputs were converted from raw ADC values into ppm estimates using experimentally derived response curves. This phase ensured the system could distinguish between normal plant emissions and actual hazardous leak levels. Detection without calibration is garbage data.'
     },
     6: {
-      img: 'fin.png',
+      img: 'case/t.png',
       title: 'Thermal Imaging Leak Localization',
       text: 'Gas detection tells you something is wrong. Thermal imaging tells you exactly where. The onboard thermal camera continuously scanned for temperature anomalies. Gas leaks often create localized cooling or heating patterns depending on pressure and expansion behavior. Thermal processing included temperature gradient mapping, hotspot segmentation, heat signature thresholding, and coordinate correlation with gas concentration spikes. When both high gas concentration and thermal anomaly overlapped spatially, the system flagged a confirmed leak zone. This dual-sensor fusion reduced false positives dramatically. Gas spike alone equals warning. Gas spike plus thermal anomaly equals actionable event.'
     },
     7: {
-      img: 'fin.png',
+      img: 'case/gps.png',
       title: 'Navigation, Mapping GPS Integration',
       text: 'The robot operated under semi-autonomous patrol logic. GPS coordinates were logged continuously, mapping movement paths relative to inspection zones. This allowed operators to review patrol routes, identify repeated leak zones, and analyze historical inspection data. Future predictive maintenance becomes possible when data is logged properly. By correlating gas detection events with GPS coordinates, the system created a comprehensive map of leak hotspots and vulnerability areas within the industrial facility.'
     },
     8: {
-      img: 'fin.png',
+      img: 'case/5.png',
       title: 'Web Interface Remote Command System',
       text: 'This phase transformed the robot from a machine into a deployable industrial system. A web-based control and monitoring interface was developed featuring live gas concentration readings (real-time graphs), thermal camera video stream, interactive map with GPS tracking, leak alert indicators, patrol route visualization, system health diagnostics, and battery monitoring. A Linux-based remote terminal enabled command-line control for advanced debugging and diagnostics. Operators could send movement commands, trigger manual scan mode, access onboard system logs, and execute emergency overrides remotely. The system became truly autonomous yet human-supervised.'
     }
