@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ePikk – Autonomous Industrial Gas Inspection Robot</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --gold: #f0b429;
+    --white: #f5f5f0;
+    --gray: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV — fixed, transparent, gains blur on scroll */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 40px;
+    transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
+  }
+
+  nav.scrolled {
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid #1f1f1f;
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .hero-logo {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .logo-icon { width: 34px; height: 34px; }
+  .logo-icon svg { width: 100%; height: 100%; }
+
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 3px;
+    color: var(--white);
+    transition: color 0.3s;
+  }
+  .logo-link:hover .logo-text { color: var(--gold); }
+
+  /* HERO — fills the full viewport */
+  .hero {
+    background: 
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url("kin.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 40px 120px;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 35%, rgba(240,180,41,0.11) 0%, transparent 68%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .case-study-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: block;
+    opacity: 0.85;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 110px);
+    line-height: 1.0;
+    letter-spacing: 2px;
+    max-width: 90vw;
+    margin: 0 auto 28px;
+  }
+
+  .hero h1 em { color: var(--gold); font-style: normal; }
+
+  .project-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: block;
+    opacity: 0.8;
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: #9a9a9a;
+    font-weight: 300;
+    line-height: 1.8;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* Scroll arrow — pinned to the bottom of the hero section */
+  .scroll-arrow {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    background: rgba(240,180,41,0.05);
+    text-decoration: none;
+    animation: arrowBounce 2.2s ease-in-out infinite;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+
+  .scroll-arrow:hover {
+    background: rgba(240,180,41,0.16);
+    box-shadow: 0 0 24px rgba(240,180,41,0.28);
+  }
+
+  .scroll-arrow svg { color: var(--gold); display: block; }
+
+  @keyframes arrowBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(10px); }
+  }
+
+  /* TIMELINE SECTION */
+  #timeline-section { padding: 80px 0 100px; }
+
+  .timeline {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold) 0%, rgba(240,180,41,0.08) 100%);
+    transform: translateX(-50%);
+  }
+
+  .phase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 64px;
+    position: relative;
+  }
+
+  .phase::before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 10px rgba(240,180,41,0.6);
+    z-index: 1;
+  }
+
+  .phase-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    width: 100%;
+    align-items: center;
+  }
+
+  /* odd: text left, image right */
+  .phase:nth-child(odd) .phase-header {
+    order: 1;
+    text-align: right;
+    align-items: flex-end;
+    padding-right: 48px;
+  }
+  .phase:nth-child(odd) .phase-image-wrap { order: 2; }
+
+  /* even: image left, text right */
+  .phase:nth-child(even) .phase-image-wrap { order: 1; }
+  .phase:nth-child(even) .phase-header {
+    order: 2;
+    text-align: left;
+    align-items: flex-start;
+    padding-left: 48px;
+  }
+
+  .phase-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .phase-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  .phase-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(22px, 3vw, 36px);
+    letter-spacing: 1px;
+    line-height: 1.15;
+    color: var(--white);
+  }
+
+  /* IMAGE CARD */
+  .phase-image-wrap {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 8px;
+    aspect-ratio: 4/3;
+    border: 1px solid #1e1e1e;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  }
+
+  .phase-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s;
+    filter: brightness(0.82) saturate(0.85);
+  }
+
+  .phase-image-wrap:hover img {
+    transform: scale(1.1);
+    filter: brightness(1.0) saturate(1.15);
+  }
+
+  .img-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10,10,10,0.52);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .phase-image-wrap:hover .img-overlay { opacity: 1; }
+
+  .img-overlay span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    border: 1px solid rgba(240,180,41,0.7);
+    padding: 7px 16px;
+    border-radius: 2px;
+  }
+
+  .shimmer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(130deg, transparent 35%, rgba(255,255,255,0.07) 50%, transparent 65%);
+    transform: translateX(-150%);
+    transition: transform 0.65s ease;
+    pointer-events: none;
+  }
+
+  .phase-image-wrap:hover .shimmer { transform: translateX(150%); }
+
+  /* EXPANDED PANEL */
+  .phase-expand {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.4s, margin-top 0.3s;
+    margin-top: 0;
+  }
+
+  .phase-expand.open {
+    max-height: 500px;
+    opacity: 1;
+    margin-top: 16px;
+  }
+
+  .phase-expand-inner {
+    background: #111;
+    border: 1px solid #1e1e1e;
+    border-radius: 8px;
+    padding: 24px 28px;
+  }
+
+  .expand-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .phase-expand-inner p {
+    font-size: 15px;
+    line-height: 1.85;
+    color: #999;
+    font-weight: 300;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.93);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal-box {
+    max-width: 1000px;
+    width: 100%;
+    position: relative;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+
+  .modal-overlay.active .modal-box { transform: scale(1) translateY(0); }
+
+  .modal-box img {
+    width: 100%;
+    display: block;
+    border-radius: 10px 10px 0 0;
+    max-height: 50vh;
+    object-fit: cover;
+  }
+
+  .modal-body {
+    background: #121212;
+    border: 1px solid #222;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    padding: 28px 32px;
+  }
+
+  .modal-body .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .modal-body p {
+    font-size: 15px;
+    line-height: 1.85;
+    color: #999;
+    font-weight: 300;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    width: 40px;
+    height: 40px;
+    background: var(--gold);
+    border: none;
+    border-radius: 50%;
+    color: #0a0a0a;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .modal-close:hover { transform: scale(1.1); background: #ffd04a; }
+
+  /* FLOATING BUTTON */
+  .floating-btn {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 400;
+    background: var(--gold);
+    color: #0a0a0a;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 14px 26px;
+    border-radius: 50px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.2s;
+    animation: floatPulse 3s ease-in-out infinite;
+  }
+
+  .floating-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 8px 32px rgba(240,180,41,0.6);
+    background: #ffd04a;
+  }
+
+  @keyframes floatPulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(240,180,41,0.35); }
+    50%       { box-shadow: 0 6px 28px rgba(240,180,41,0.55); }
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid #181818;
+    padding: 60px 80px 44px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 4px;
+    color: var(--white);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 28px;
+    transition: color 0.3s;
+  }
+  .footer-logo:hover { color: var(--gold); }
+
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .social-link {
+    width: 52px;
+    height: 52px;
+    border: 1px solid #252525;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    text-decoration: none;
+    transition: border-color 0.3s, color 0.3s, transform 0.3s, background 0.3s;
+  }
+
+  .social-link:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-4px);
+    background: rgba(240,180,41,0.07);
+  }
+
+  .social-link svg { width: 20px; height: 20px; fill: currentColor; }
+
+  .footer-url {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+
+  .footer-copy { font-size: 11px; color: #333; letter-spacing: 1px; }
+
+  /* VIDEO MODAL */
+  .video-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .video-modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .video-modal-box {
+    max-width: 900px;
+    width: 100%;
+    position: relative;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+
+  .video-modal-overlay.active .video-modal-box { transform: scale(1) translateY(0); }
+
+  .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .video-modal-close {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    width: 40px;
+    height: 40px;
+    background: var(--gold);
+    border: none;
+    border-radius: 50%;
+    color: #0a0a0a;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .video-modal-close:hover { transform: scale(1.1); background: #ffd04a; }
+
+.watch-video-div {
+    display: flex;
+    justify-content: center; /* Horizontal */
+    align-items: center;     /* Vertical */
+}
+
+  /* WATCH VIDEO BUTTON */
+  .watch-video-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: #0a0a0a;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.2s;
+    margin-top: 28px;
+  }
+
+  .watch-video-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 8px 32px rgba(240,180,41,0.6);
+    background: #ffd04a;
+  }
+
+  .play-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="https://www.epikk.co" target="_blank" class="logo-link">
+    <div class="logo-icon">
+        <img src="logo-white.png" alt="Company Logo" class="hero-logo">
+        <rect width="36" height="36" rx="6" fill="#1a1a1a"/>
+        <circle cx="13" cy="13" r="4" stroke="#f0b429" stroke-width="1.5"/>
+        <circle cx="23" cy="13" r="4" stroke="#f0b429" stroke-width="1.5"/>
+        <circle cx="13" cy="23" r="4" stroke="#f0b429" stroke-width="1.5"/>
+        <circle cx="23" cy="23" r="4" stroke="#f5f5f0" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <span class="logo-text">ePikk</span>
+  </a>
+</nav>
+
+<!-- HERO — full viewport height -->
+<section class="hero" id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <span class="case-study-label">Case Study</span>
+    <h1>Autonomous Industrial<em> Gas Inspection </em>Robot</h1>
+    <span class="project-label">Project Overview</span>
+    <p>Gas leaks in power plants are silent risks. They’re invisible, sometimes odorless, and often located in high-temperature, high-risk zones where human inspection is slow and dangerous.
+
+This project involved the design and deployment of a 4-wheeled autonomous ground robot engineered to patrol industrial environments and detect gas leakages in real time using MQ-series gas sensors, while using a thermal camera to localize the exact leak source through heat signature analysis.</p></div>
+
+  <!-- Arrow at the very bottom of the hero, scrolls to next section -->
+  <a class="scroll-arrow" id="scrollArrow" href="#timeline-section" aria-label="Scroll down">
+    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 9l-7 7-7-7"/>
+    </svg>
+  </a>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline-section">
+  <div class="timeline">
+
+    <!-- Phase 1 -->
+    <div class="phase" id="phase-1">
+      <div class="phase-row">
+        <div class="phase-header">
+          <span class="phase-num">Phase 01</span>
+          <div class="phase-title">Problem Definition &amp; System Requirements</div>
+        </div>
+        <div class="phase-image-wrap" onclick="openModal(1)">
+          <img src="strat.jpg" alt="Problem Definition">
+          <div class="img-overlay"><span>View Details</span></div>
+          <div class="shimmer"></div>
+        </div>
+      </div>
+      <div class="phase-expand" id="expand-1">
+        <div class="phase-expand-inner">
+          <div class="expand-title">Problem Definition &amp; System Requirements</div>
+          <p>Before touching hardware, the problem was framed properly. We defined target gases to detect (combustible and hazardous industrial gases), acceptable detection threshold (ppm sensitivity target), maximum response time, required localization accuracy, operating temperature range inside plant environments, and communication range constraints. The core system objectives became: detect abnormal gas concentration, pinpoint the exact physical source of the leak, map and log the leak location, and stream live inspection data remotely. The project shifted from "gas detection robot" to autonomous leak intelligence system.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase" id="phase-2">
+      <div class="phase-row">
+        <div class="phase-header">
+          <span class="phase-num">Phase 02</span>
+          <div class="phase-title">Mechanical Design &amp; 3D Modeling</div>
+        </div>
+        <div class="phase-image-wrap" onclick="openModal(2)">
+          <img src="2.png" alt="Mechanical Design">
+          <div class="img-overlay"><span>View Details</span></div>
+          <div class="shimmer"></div>
+        </div>
+      </div>
+      <div class="phase-expand" id="expand-2">
+        <div class="phase-expand-inner">
+          <div class="expand-title">Mechanical Design &amp; 3D Modeling</div>
+          <p>The robot was modeled entirely in CAD before fabrication. Design considerations included a 4-wheel differential drive for stability on industrial flooring, low center of gravity to prevent tipping near equipment, enclosed electronics housing for heat and dust resistance, elevated sensor mast for better gas sampling, and thermal camera mounting angle optimization. Gas sensors were positioned strategically to ensure exposure to ambient airflow while being protected from direct mechanical damage. The chassis was dimensioned to balance maneuverability with battery capacity and onboard processing space. No random placements—every sensor position had a reason.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase" id="phase-3">
+      <div class="phase-row">
+        <div class="phase-header">
+          <span class="phase-num">Phase 03</span>
+          <div class="phase-title">Electronics Architecture &amp; PCB Design</div>
+        </div>
+        <div class="phase-image-wrap" onclick="openModal(3)">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Electronics Architecture">
+          <div class="img-overlay"><span>View Details</span></div>
+          <div class="shimmer"></div>
+        </div>
+      </div>
+      <div class="phase-expand" id="expand-3">
+        <div class="phase-expand-inner">
+          <div class="expand-title">Electronics Architecture &amp; PCB Design</div>
+          <p>Instead of messy wiring, a custom PCB architecture was developed to ensure reliability. The PCB integrated a microcontroller/embedded processing unit, MQ gas sensor array interface, analog signal conditioning circuitry, motor driver stages, voltage regulation modules, thermal camera communication interface, GPS module, and wireless communication module. Gas sensors like MQ-series devices produce analog signals highly sensitive to noise, so signal conditioning circuits were implemented to stabilize voltage supply, filter electrical noise, and improve ADC accuracy. Power segregation ensured motor switching noise did not corrupt sensor readings. Industrial reliability begins at the PCB level.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="phase" id="phase-4">
+      <div class="phase-row">
+        <div class="phase-header">
+          <span class="phase-num">Phase 04</span>
+          <div class="phase-title">Embedded Systems &amp; Autonomous Control</div>
+        </div>
+        <div class="phase-image-wrap" onclick="openModal(4)">
+          <img src="kin.png" alt="Embedded Systems">
+          <div class="img-overlay"><span>View Details</span></div>
+          <div class="shimmer"></div>
+        </div>
+      </div>
+      <div class="phase-expand" id="expand-4">
+        <div class="phase-expand-inner">
+          <div class="expand-title">Embedded Systems &amp; Autonomous Control</div>
+          <p>The firmware layer handled real-time gas concentration monitoring, threshold-based alert triggering, motion control using encoder feedback, autonomous patrol routines, obstacle handling logic, and GPS coordinate tagging. Wheel displacement tracking followed X=rθ, allowing gas concentration spikes to be mapped to physical coordinates. When abnormal gas levels exceeded calibrated thresholds, the robot automatically slowed down and initiated thermal scanning mode. This prevented overshooting potential leak sources and enabled precise localization.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 5 -->
+    <div class="phase" id="phase-5">
+      <div class="phase-row">
+        <div class="phase-header">
+          <span class="phase-num">Phase 05</span>
+          <div class="phase-title">Gas Detection &amp; Calibration</div>
+        </div>
+        <div class="phase-image-wrap" onclick="openModal(5)">
+          <img src="fin.png" alt="Gas Detection">
+          <div class="img-overlay"><span>View Details</span></div>
+          <div class="shimmer"></div>
+        </div>
+      </div>
+      <div class="phase-expand" id="expand-5">
+        <div class="phase-expand-inner">
+          <div class="expand-title">Gas Detection &amp; Calibration</div>
+          <p>MQ sensors are powerful but unreliable without calibration. Calibration involved baseline ambient air sampling, controlled gas exposure testing, sensitivity curve mapping, and temperature compensation adjustments. Sensor outputs were converted from raw ADC values into ppm estimates using experimentally derived response curves. This phase ensured the system could distinguish between normal plant emissions and actual hazardous leak levels. Detection without calibration is garbage data.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 6 -->
+    <div class="phase" id="phase-6">
+      <div class="phase-row">
+        <div class="phase-header">
+          <span class="phase-num">Phase 06</span>
+          <div class="phase-title">Thermal Imaging &amp; Leak Localization</div>
+        </div>
+        <div class="phase-image-wrap" onclick="openModal(6)">
+          <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80" alt="Thermal Imaging">
+          <div class="img-overlay"><span>View Details</span></div>
+          <div class="shimmer"></div>
+        </div>
+      </div>
+      <div class="phase-expand" id="expand-6">
+        <div class="phase-expand-inner">
+          <div class="expand-title">Thermal Imaging &amp; Leak Localization</div>
+          <p>Gas detection tells you something is wrong. Thermal imaging tells you exactly where. The onboard thermal camera continuously scanned for temperature anomalies. Gas leaks often create localized cooling or heating patterns depending on pressure and expansion behavior. Thermal processing included temperature gradient mapping, hotspot segmentation, heat signature thresholding, and coordinate correlation with gas concentration spikes. When both high gas concentration and thermal anomaly overlapped spatially, the system flagged a confirmed leak zone. This dual-sensor fusion reduced false positives dramatically. Gas spike alone equals warning. Gas spike plus thermal anomaly equals actionable event.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 7 -->
+    <div class="phase" id="phase-7">
+      <div class="phase-row">
+        <div class="phase-header">
+          <span class="phase-num">Phase 07</span>
+          <div class="phase-title">Navigation, Mapping &amp; GPS Integration</div>
+        </div>
+        <div class="phase-image-wrap" onclick="openModal(7)">
+          <img src="https://images.unsplash.com/photo-1569163139394-de4798aa62b3?w=600&q=80" alt="Navigation Mapping">
+          <div class="img-overlay"><span>View Details</span></div>
+          <div class="shimmer"></div>
+        </div>
+      </div>
+      <div class="phase-expand" id="expand-7">
+        <div class="phase-expand-inner">
+          <div class="expand-title">Navigation, Mapping &amp; GPS Integration</div>
+          <p>The robot operated under semi-autonomous patrol logic. GPS coordinates were logged continuously, mapping movement paths relative to inspection zones. This allowed operators to review patrol routes, identify repeated leak zones, and analyze historical inspection data. Future predictive maintenance becomes possible when data is logged properly. By correlating gas detection events with GPS coordinates, the system created a comprehensive map of leak hotspots and vulnerability areas within the industrial facility.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 8 -->
+    <div class="phase" id="phase-8">
+      <div class="phase-row">
+        <div class="phase-header">
+          <span class="phase-num">Phase 08</span>
+          <div class="phase-title">Web Interface &amp; Remote Command System</div>
+        </div>
+        <div class="phase-image-wrap" onclick="openModal(8)">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80" alt="Web Interface">
+          <div class="img-overlay"><span>View Details</span></div>
+          <div class="shimmer"></div>
+        </div>
+      </div>
+      <div class="phase-expand" id="expand-8">
+        <div class="phase-expand-inner">
+          <div class="expand-title">Web Interface &amp; Remote Command System</div>
+          <p>This phase transformed the robot from a machine into a deployable industrial system. A web-based control and monitoring interface was developed featuring live gas concentration readings (real-time graphs), thermal camera video stream, interactive map with GPS tracking, leak alert indicators, patrol route visualization, system health diagnostics, and battery monitoring. A Linux-based remote terminal enabled command-line control for advanced debugging and diagnostics. Operators could send movement commands, trigger manual scan mode, access onboard system logs, and execute emergency overrides remotely. The system became truly autonomous yet human-supervised.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="watch-video-div">
+    <button class="watch-video-btn" onclick="openVideoModal()" aria-label="Watch Project Video">
+      <svg class="play-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      Watch Video
+    </button>  
+  </div>
+</section>
+
+
+
+<!-- VIDEO MODAL -->
+<div class="video-modal-overlay" id="videoModal" onclick="handleVideoOverlayClick(event)">
+  <div class="video-modal-box" id="video-modal-box">
+    <button class="video-modal-close" onclick="closeVideoModal()">&#x2715;</button>
+    <div class="video-container">
+      <iframe id="videoFrame" src="" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
+  <div class="modal-box" id="modal-box">
+    <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    <img id="modal-img" src="" alt="">
+    <div class="modal-body">
+      <div class="modal-title" id="modal-title"></div>
+      <p id="modal-body-text"></p>
+    </div>
+  </div>
+</div>
+
+<!-- FLOATING BUTTON -->
+<a href="https://www.epikk.co" target="_blank" class="floating-btn">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+  </svg>
+  Learn More
+</a>
+
+<!-- FOOTER -->
+<footer>
+  <a href="https://www.epikk.co" target="_blank" class="footer-logo">ePikk</a>
+  <div class="socials">
+    <a href="https://x.com/ePikk_co" target="_blank" class="social-link" title="X (Twitter)">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.631L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/company/epikk-co/" target="_blank" class="social-link" title="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="https://www.youtube.com/@ePikk-co" target="_blank" class="social-link" title="YouTube">
+      <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/ePikk.comp" target="_blank" class="social-link" title="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/epikk_co" target="_blank" class="social-link" title="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+    </a>
+    <a href="https://wa.link/ancm9o" target="_blank" class="social-link" title="WhatsApp">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+    </a>
+  </div>
+  <span class="footer-url">www.epikk.co</span>
+  <div class="footer-copy">© 2025 ePikk. All rights reserved.</div>
+</footer>
+
+<script>
+  /* Nav transparency on scroll */
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* Arrow scroll */
+  document.getElementById('scrollArrow').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('timeline-section').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  /* Phase data */
+  const phases = {
+    1: {
+      img: 'strat.jpg',
+      title: 'Problem Definition System Requirements',
+      text: 'Before touching hardware, the problem was framed properly. We defined target gases to detect (combustible and hazardous industrial gases), acceptable detection threshold (ppm sensitivity target), maximum response time, required localization accuracy, operating temperature range inside plant environments, and communication range constraints. The core system objectives became: detect abnormal gas concentration, pinpoint the exact physical source of the leak, map and log the leak location, and stream live inspection data remotely. The project shifted from "gas detection robot" to autonomous leak intelligence system.'
+    },
+    2: {
+      img: '2.png',
+      title: 'Mechanical Design 3D Modeling',
+      text: 'The robot was modeled entirely in CAD before fabrication. Design considerations included a 4-wheel differential drive for stability on industrial flooring, low center of gravity to prevent tipping near equipment, enclosed electronics housing for heat and dust resistance, elevated sensor mast for better gas sampling, and thermal camera mounting angle optimization. Gas sensors were positioned strategically to ensure exposure to ambient airflow while being protected from direct mechanical damage. The chassis was dimensioned to balance maneuverability with battery capacity and onboard processing space. No random placements—every sensor position had a reason.'
+    },
+    3: {
+      img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=85',
+      title: 'Electronics Architecture PCB Design',
+      text: 'Instead of messy wiring, a custom PCB architecture was developed to ensure reliability. The PCB integrated a microcontroller/embedded processing unit, MQ gas sensor array interface, analog signal conditioning circuitry, motor driver stages, voltage regulation modules, thermal camera communication interface, GPS module, and wireless communication module. Gas sensors like MQ-series devices produce analog signals highly sensitive to noise, so signal conditioning circuits were implemented to stabilize voltage supply, filter electrical noise, and improve ADC accuracy. Power segregation ensured motor switching noise did not corrupt sensor readings. Industrial reliability begins at the PCB level.'
+    },
+    4: {
+      img: 'kin.png',
+      title: 'Embedded Systems Autonomous Control',
+      text: 'The firmware layer handled real-time gas concentration monitoring, threshold-based alert triggering, motion control using encoder feedback, autonomous patrol routines, obstacle handling logic, and GPS coordinate tagging. Wheel displacement tracking followed X=rθ, allowing gas concentration spikes to be mapped to physical coordinates. When abnormal gas levels exceeded calibrated thresholds, the robot automatically slowed down and initiated thermal scanning mode. This prevented overshooting potential leak sources and enabled precise localization.'
+    },
+    5: {
+      img: 'fin.png',
+      title: 'Gas Detection Calibration',
+      text: 'MQ sensors are powerful but unreliable without calibration. Calibration involved baseline ambient air sampling, controlled gas exposure testing, sensitivity curve mapping, and temperature compensation adjustments. Sensor outputs were converted from raw ADC values into ppm estimates using experimentally derived response curves. This phase ensured the system could distinguish between normal plant emissions and actual hazardous leak levels. Detection without calibration is garbage data.'
+    },
+    6: {
+      img: 'fin.png',
+      title: 'Thermal Imaging Leak Localization',
+      text: 'Gas detection tells you something is wrong. Thermal imaging tells you exactly where. The onboard thermal camera continuously scanned for temperature anomalies. Gas leaks often create localized cooling or heating patterns depending on pressure and expansion behavior. Thermal processing included temperature gradient mapping, hotspot segmentation, heat signature thresholding, and coordinate correlation with gas concentration spikes. When both high gas concentration and thermal anomaly overlapped spatially, the system flagged a confirmed leak zone. This dual-sensor fusion reduced false positives dramatically. Gas spike alone equals warning. Gas spike plus thermal anomaly equals actionable event.'
+    },
+    7: {
+      img: 'fin.png',
+      title: 'Navigation, Mapping GPS Integration',
+      text: 'The robot operated under semi-autonomous patrol logic. GPS coordinates were logged continuously, mapping movement paths relative to inspection zones. This allowed operators to review patrol routes, identify repeated leak zones, and analyze historical inspection data. Future predictive maintenance becomes possible when data is logged properly. By correlating gas detection events with GPS coordinates, the system created a comprehensive map of leak hotspots and vulnerability areas within the industrial facility.'
+    },
+    8: {
+      img: 'fin.png',
+      title: 'Web Interface Remote Command System',
+      text: 'This phase transformed the robot from a machine into a deployable industrial system. A web-based control and monitoring interface was developed featuring live gas concentration readings (real-time graphs), thermal camera video stream, interactive map with GPS tracking, leak alert indicators, patrol route visualization, system health diagnostics, and battery monitoring. A Linux-based remote terminal enabled command-line control for advanced debugging and diagnostics. Operators could send movement commands, trigger manual scan mode, access onboard system logs, and execute emergency overrides remotely. The system became truly autonomous yet human-supervised.'
+    }
+  };
+
+  function openModal(id) {
+    const p = phases[id];
+    document.getElementById('modal-img').src = p.img;
+    document.getElementById('modal-title').textContent = p.title;
+    document.getElementById('modal-body-text').textContent = p.text;
+    document.getElementById('modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Also open the inline expand panel
+    document.getElementById('expand-' + id).classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  /* Video Modal Functions */
+  function openVideoModal() {
+    document.getElementById('videoModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Replace with your actual video URL (YouTube embed format: https://www.youtube.com/embed/VIDEO_ID)
+    document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/Gvn9PBZEWWA';
+  }
+
+  function closeVideoModal() {
+    document.getElementById('videoModal').classList.remove('active');
+    document.body.style.overflow = '';
+    document.getElementById('videoFrame').src = '';
+  }
+
+  function handleVideoOverlayClick(e) {
+    if (e.target === document.getElementById('videoModal')) closeVideoModal();
+  }
+</script>
+</body>
+</html>
