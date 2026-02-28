@@ -71,7 +71,7 @@
   .hero {
     background: 
     linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-    url("case/0.png");
+    url("arm_case/back.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -685,9 +685,8 @@
     <span class="case-study-label">Case Study</span>
     <h1>6DoF Industrial<em> Robot </em>Arm</h1>
     <span class="project-label">Project Overview</span>
-    <p>Gas leaks in power plants are silent risks. They’re invisible, sometimes odorless, and often located in high-temperature, high-risk zones where human inspection is slow and dangerous.
-
-This project involved the design and deployment of a 4-wheeled autonomous ground robot engineered to patrol industrial environments and detect gas leakages in real time using MQ-series gas sensors, while using a thermal camera to localize the exact leak source through heat signature analysis.</p></div>
+    <p>Industrial robotic arms are powerful — but they’re expensive, bulky, and inaccessible for small labs, startups, and student environments. Most desktop arms in the market either lack precision, lack torque, or lack serious engineering depth.
+This project involves the design and development of a 6 Degrees of Freedom (6DOF) desktop-sized robotic arm engineered to deliver industrial-style kinematic capability in a compact, accessible form factor.</p></div>
 
   <!-- Arrow at the very bottom of the hero, scrolls to next section -->
   <a class="scroll-arrow" id="scrollArrow" href="#timeline-section" aria-label="Scroll down">
@@ -706,18 +705,31 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
       <div class="phase-row">
         <div class="phase-header">
           <span class="phase-num">Phase 01</span>
-          <div class="phase-title">Problem Definition &amp; System Requirements</div>
+          <div class="phase-title">Kinematic Architecture &amp; System Definition</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(1)">
-          <img src="case/1.jpg" alt="Problem Definition">
+          <img src="arm_case/kin.png" alt="Problem Definition">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
       </div>
       <div class="phase-expand" id="expand-1">
         <div class="phase-expand-inner">
-          <div class="expand-title">Problem Definition &amp; System Requirements</div>
-          <p>Before touching hardware, the problem was framed properly. We defined target gases to detect (combustible and hazardous industrial gases), acceptable detection threshold (ppm sensitivity target), maximum response time, required localization accuracy, operating temperature range inside plant environments, and communication range constraints. The core system objectives became: detect abnormal gas concentration, pinpoint the exact physical source of the leak, map and log the leak location, and stream live inspection data remotely. The project shifted from "gas detection robot" to autonomous leak intelligence system.</p>
+          <div class="expand-title">Kinematic Architecture &amp; System Definition</div>
+          <p>The project began with mathematics. <br>
+          A 6-revolute joint (R–R–R–R–R–R) configuration was selected to allow full 3D positional and orientational control of the end effector. The joint sequence was defined as:
+<br> 1. Base yaw
+<br> 2. Shoulder pitch
+<br> 3. Elbow pitch
+<br> 4. Wrist pitch
+<br> 5. Wrist yaw
+<br> 6. Wrist roll <br>
+This configuration enables independent control of position and orientation — separating gross positioning (joints 1–3) from wrist articulation (joints 4–6).
+Forward kinematics are modeled using homogeneous transformation matrices:
+𝑇=𝑇1𝑇2𝑇3𝑇4𝑇5𝑇6
+Each transformation matrix is derived from Denavit–Hartenberg parameters, ensuring that the mechanical geometry matches solvable inverse kinematics.
+This early kinematic modeling prevents a common mistake: building an arm that looks correct but behaves unpredictably near singularities.
+Workspace envelope, joint limits, and theoretical reach were defined before CAD modeling began.</p>
         </div>
       </div>
     </div>
@@ -727,18 +739,29 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
       <div class="phase-row">
         <div class="phase-header">
           <span class="phase-num">Phase 02</span>
-          <div class="phase-title">Mechanical Design &amp; 3D Modeling</div>
+          <div class="phase-title">3D Modeling &amp; Structural Design Optimization</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(2)">
-          <img src="case/22.png" alt="Mechanical Design">
+          <img src="arm_case/3d.png" alt="Mechanical Design">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
       </div>
       <div class="phase-expand" id="expand-2">
         <div class="phase-expand-inner">
-          <div class="expand-title">Mechanical Design &amp; 3D Modeling</div>
-          <p>The robot was modeled entirely in CAD before fabrication. Design considerations included a 4-wheel differential drive for stability on industrial flooring, low center of gravity to prevent tipping near equipment, enclosed electronics housing for heat and dust resistance, elevated sensor mast for better gas sampling, and thermal camera mounting angle optimization. Gas sensors were positioned strategically to ensure exposure to ambient airflow while being protected from direct mechanical damage. The chassis was dimensioned to balance maneuverability with battery capacity and onboard processing space. No random placements—every sensor position had a reason.</p>
+          <div class="expand-title">3D Modeling &amp; Structural Design Optimization</div>
+          <p>With kinematics defined, full CAD modeling was initiated.
+Each link was designed with attention to:
+<br>Structural rigidity under torque
+<br>Weight reduction without compromising strength
+<br>Internal cable routing channels
+<br>Bearing alignment precision
+<br>Assembly accessibility
+<br>
+The arm links were dimensioned according to calculated torque loads rather than aesthetic proportion.
+Finite consideration was given to load propagation — understanding that every gram added to the wrist multiplies torque demand at the shoulder and base.
+Clearance simulations were performed to prevent joint collision across full articulation range.
+The digital prototype allowed interference checks, axis alignment validation, and stress reasoning before fabrication.</p>
         </div>
       </div>
     </div>
@@ -748,18 +771,36 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
       <div class="phase-row">
         <div class="phase-header">
           <span class="phase-num">Phase 03</span>
-          <div class="phase-title">Electronics Architecture &amp; PCB Design</div>
+          <div class="phase-title">Base Assembly Engineering</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(3)">
-          <img src="case/pcb.PNG" alt="Electronics Architecture">
+          <img src="arm_case/base.png" alt="Electronics Architecture">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
       </div>
       <div class="phase-expand" id="expand-3">
         <div class="phase-expand-inner">
-          <div class="expand-title">Electronics Architecture &amp; PCB Design</div>
-          <p>Instead of messy wiring, a custom PCB architecture was developed to ensure reliability. The PCB integrated a microcontroller/embedded processing unit, MQ gas sensor array interface, analog signal conditioning circuitry, motor driver stages, voltage regulation modules, thermal camera communication interface, GPS module, and wireless communication module. Gas sensors like MQ-series devices produce analog signals highly sensitive to noise, so signal conditioning circuits were implemented to stabilize voltage supply, filter electrical noise, and improve ADC accuracy. Power segregation ensured motor switching noise did not corrupt sensor readings. Industrial reliability begins at the PCB level.</p>
+          <div class="expand-title">Base Assembly Engineering</div>
+          <p>
+            The base assembly is the mechanical foundation of the entire system. Any instability at this level propagates through all six joints, amplifying positional error at the end effector.
+The base was engineered to handle maximum torque generated by full arm extension under load.
+<br> Key design considerations included:  High-torque motor coupling with rigid shaft interface   |   Dual-bearing rotational support to eliminate wobble   |   Reinforced housing to resist torsional flex   |   Stable mounting platform for desktop deployment
+<br>
+Torque planning followed:
+<br>
+ τ = r × F
+<br>
+Where: <br>
+𝑟  is the distance from base axis to end mass <br>
+𝐹  is gravitational force of the extended arm <br>
+Worst-case scenarios were calculated assuming full extension with payload.
+<br>The fabricated base assembly underwent rotational testing to verify:
+<br>1. Smooth yaw motion
+<br>2. Minimal radial play
+<br>3. No structural flex under manual stress loading <br>
+The result is a stable rotational platform ready to support the full articulated structure.
+          </p>
         </div>
       </div>
     </div>
@@ -769,18 +810,24 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
       <div class="phase-row">
         <div class="phase-header">
           <span class="phase-num">Phase 04</span>
-          <div class="phase-title">Embedded Systems &amp; Autonomous Control</div>
+          <div class="phase-title">Actuation Strategy &amp; Torque Planning</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(4)">
-          <img src="case/3.png" alt="Embedded Systems">
+          <img src="arm_case/torque.png" alt="Embedded Systems">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
       </div>
       <div class="phase-expand" id="expand-4">
         <div class="phase-expand-inner">
-          <div class="expand-title">Embedded Systems &amp; Autonomous Control</div>
-          <p>The firmware layer handled real-time gas concentration monitoring, threshold-based alert triggering, motion control using encoder feedback, autonomous patrol routines, obstacle handling logic, and GPS coordinate tagging. Wheel displacement tracking followed X=rθ, allowing gas concentration spikes to be mapped to physical coordinates. When abnormal gas levels exceeded calibrated thresholds, the robot automatically slowed down and initiated thermal scanning mode. This prevented overshooting potential leak sources and enabled precise localization.</p>
+          <div class="expand-title">Actuation Strategy &amp; Torque Planning</div>
+          <p>Each joint’s torque requirement is calculated based on cumulative downstream mass and link length.
+
+Upper joints are being evaluated carefully since torque demands compound toward the base. Gear reduction ratios are being selected to balance speed and torque while minimizing backlash.
+
+Selection criteria include:, Stall torque with safety margin, Continuous operating torque, Angular resolution capability, Gearbox backlash specification, and Thermal performance under sustained load
+<br>The objective is smooth, controlled motion — not jerky hobby servo behavior.
+</p>
         </div>
       </div>
     </div>
@@ -790,18 +837,18 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
       <div class="phase-row">
         <div class="phase-header">
           <span class="phase-num">Phase 05</span>
-          <div class="phase-title">Gas Detection &amp; Calibration</div>
+          <div class="phase-title">Electronics Architecture</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(5)">
-          <img src="case/gass.png" alt="Gas Detection">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80" alt="Gas Detection">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
       </div>
       <div class="phase-expand" id="expand-5">
         <div class="phase-expand-inner">
-          <div class="expand-title">Gas Detection &amp; Calibration</div>
-          <p>MQ sensors are powerful but unreliable without calibration. Calibration involved baseline ambient air sampling, controlled gas exposure testing, sensitivity curve mapping, and temperature compensation adjustments. Sensor outputs were converted from raw ADC values into ppm estimates using experimentally derived response curves. This phase ensured the system could distinguish between normal plant emissions and actual hazardous leak levels. Detection without calibration is garbage data.</p>
+          <div class="expand-title">Electronics Architecture</div>
+          <p> </p>
         </div>
       </div>
     </div>
@@ -811,65 +858,22 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
       <div class="phase-row">
         <div class="phase-header">
           <span class="phase-num">Phase 06</span>
-          <div class="phase-title">Thermal Imaging &amp; Leak Localization</div>
+          <div class="phase-title">TO BE CONTINUED ...</div>
         </div>
         <div class="phase-image-wrap" onclick="openModal(6)">
-          <img src="case/t.png" alt="Thermal Imaging">
+          <img src=" " alt="Phase 6">
           <div class="img-overlay"><span>View Details</span></div>
           <div class="shimmer"></div>
         </div>
       </div>
       <div class="phase-expand" id="expand-6">
         <div class="phase-expand-inner">
-          <div class="expand-title">Thermal Imaging &amp; Leak Localization</div>
-          <p>Gas detection tells you something is wrong. Thermal imaging tells you exactly where. The onboard thermal camera continuously scanned for temperature anomalies. Gas leaks often create localized cooling or heating patterns depending on pressure and expansion behavior. Thermal processing included temperature gradient mapping, hotspot segmentation, heat signature thresholding, and coordinate correlation with gas concentration spikes. When both high gas concentration and thermal anomaly overlapped spatially, the system flagged a confirmed leak zone. This dual-sensor fusion reduced false positives dramatically. Gas spike alone equals warning. Gas spike plus thermal anomaly equals actionable event.</p>
+          <div class="expand-title">TO BE CONTINUED</div>
+          <p>PROJECT IS STILL IN PROGRESS, MORE DETAILS WILL  BE UPLOADED SOON</p>
         </div>
       </div>
     </div>
 
-    <!-- Phase 7 -->
-    <div class="phase" id="phase-7">
-      <div class="phase-row">
-        <div class="phase-header">
-          <span class="phase-num">Phase 07</span>
-          <div class="phase-title">Navigation, Mapping &amp; GPS Integration</div>
-        </div>
-        <div class="phase-image-wrap" onclick="openModal(7)">
-          <img src="case/gp.png" alt="Navigation Mapping">
-          <div class="img-overlay"><span>View Details</span></div>
-          <div class="shimmer"></div>
-        </div>
-      </div>
-      <div class="phase-expand" id="expand-7">
-        <div class="phase-expand-inner">
-          <div class="expand-title">Navigation, Mapping &amp; GPS Integration</div>
-          <p>The robot operated under semi-autonomous patrol logic. GPS coordinates were logged continuously, mapping movement paths relative to inspection zones. This allowed operators to review patrol routes, identify repeated leak zones, and analyze historical inspection data. Future predictive maintenance becomes possible when data is logged properly. By correlating gas detection events with GPS coordinates, the system created a comprehensive map of leak hotspots and vulnerability areas within the industrial facility.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Phase 8 -->
-    <div class="phase" id="phase-8">
-      <div class="phase-row">
-        <div class="phase-header">
-          <span class="phase-num">Phase 08</span>
-          <div class="phase-title">Web Interface &amp; Remote Command System</div>
-        </div>
-        <div class="phase-image-wrap" onclick="openModal(8)">
-          <img src="case/5.png" alt="Web Interface">
-          <div class="img-overlay"><span>View Details</span></div>
-          <div class="shimmer"></div>
-        </div>
-      </div>
-      <div class="phase-expand" id="expand-8">
-        <div class="phase-expand-inner">
-          <div class="expand-title">Web Interface &amp; Remote Command System</div>
-          <p>This phase transformed the robot from a machine into a deployable industrial system. A web-based control and monitoring interface was developed featuring live gas concentration readings (real-time graphs), thermal camera video stream, interactive map with GPS tracking, leak alert indicators, patrol route visualization, system health diagnostics, and battery monitoring. A Linux-based remote terminal enabled command-line control for advanced debugging and diagnostics. Operators could send movement commands, trigger manual scan mode, access onboard system logs, and execute emergency overrides remotely. The system became truly autonomous yet human-supervised.</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
 
   <div class="watch-video-div">
     <button class="watch-video-btn" onclick="openVideoModal()" aria-label="Watch Project Video">
@@ -953,45 +957,45 @@ This project involved the design and deployment of a 4-wheeled autonomous ground
   /* Phase data */
   const phases = {
     1: {
-      img: 'case/1.jpg',
-      title: 'Problem Definition System Requirements',
-      text: 'Before touching hardware, the problem was framed properly. We defined target gases to detect (combustible and hazardous industrial gases), acceptable detection threshold (ppm sensitivity target), maximum response time, required localization accuracy, operating temperature range inside plant environments, and communication range constraints. The core system objectives became: detect abnormal gas concentration, pinpoint the exact physical source of the leak, map and log the leak location, and stream live inspection data remotely. The project shifted from "gas detection robot" to autonomous leak intelligence system.'
+      img: 'arm_case/kin.png',
+      title: 'Kinematic Architecture & System Definition',
+      text: 'The project began with mathematics. A 6-revolute joint (R–R–R–R–R–R) configuration was selected to allow full 3D positional and orientational control of the end effector. The joint sequence was defined as: 1. Base yaw 2. Shoulder pitch 3. Elbow pitch 4. Wrist pitch 5. Wrist yaw 6. Wrist roll This configuration enables independent control of position and orientation — separating gross positioning (joints 1–3) from wrist articulation (joints 4–6). Forward kinematics are modeled using homogeneous transformation matrices: 𝑇=𝑇1𝑇2𝑇3𝑇4𝑇5𝑇6 Each transformation matrix is derived from Denavit–Hartenberg parameters, ensuring that the mechanical geometry matches solvable inverse kinematics. This early kinematic modeling prevents a common mistake: building an arm that looks correct but behaves unpredictably near singularities. Workspace envelope, joint limits, and theoretical reach were defined before CAD modeling began.'
     },
     2: {
-      img: 'case/22.png',
-      title: 'Mechanical Design 3D Modeling',
-      text: 'The robot was modeled entirely in CAD before fabrication. Design considerations included a 4-wheel differential drive for stability on industrial flooring, low center of gravity to prevent tipping near equipment, enclosed electronics housing for heat and dust resistance, elevated sensor mast for better gas sampling, and thermal camera mounting angle optimization. Gas sensors were positioned strategically to ensure exposure to ambient airflow while being protected from direct mechanical damage. The chassis was dimensioned to balance maneuverability with battery capacity and onboard processing space. No random placements—every sensor position had a reason.'
+      img: 'arm_case/3d.png',
+      title: '3D Modeling & Structural Design Optimization',
+      text: 'With kinematics defined, full CAD modeling was initiated. Each link was designed with attention to: Structural rigidity under torque, Weight reduction without compromising strength, Internal cable routing channels, Bearing alignment precision, Assembly accessibility. The arm links were dimensioned according to calculated torque loads rather than aesthetic proportion. Finite consideration was given to load propagation — understanding that every gram added to the wrist multiplies torque demand at the shoulder and base. Clearance simulations were performed to prevent joint collision across full articulation range. The digital prototype allowed interference checks, axis alignment validation, and stress reasoning before fabrication.'
     },
     3: {
-      img: 'case/pcb.PNG',
-      title: 'Electronics Architecture PCB Design',
-      text: 'Instead of messy wiring, a custom PCB architecture was developed to ensure reliability. The PCB integrated a microcontroller/embedded processing unit, MQ gas sensor array interface, analog signal conditioning circuitry, motor driver stages, voltage regulation modules, thermal camera communication interface, GPS module, and wireless communication module. Gas sensors like MQ-series devices produce analog signals highly sensitive to noise, so signal conditioning circuits were implemented to stabilize voltage supply, filter electrical noise, and improve ADC accuracy. Power segregation ensured motor switching noise did not corrupt sensor readings. Industrial reliability begins at the PCB level.'
+      img: 'arm_case/base.png',
+      title: 'Base Assembly Engineering',
+      text: 'The base assembly is the mechanical foundation of the entire system. Any instability at this level propagates through all six joints, amplifying positional error at the end effector. The base was engineered to handle maximum torque generated by full arm extension under load. Key design considerations included: High-torque motor coupling with rigid shaft interface, Dual-bearing rotational support to eliminate wobble, Reinforced housing to resist torsional flex, Stable mounting platform for desktop deployment. Torque planning followed: τ = r × F Where: 𝑟 is the distance from base axis to end mass, 𝐹 is gravitational force of the extended arm. Worst-case scenarios were calculated assuming full extension with payload. The fabricated base assembly underwent rotational testing to verify: 1. Smooth yaw motion 2. Minimal radial play 3. No structural flex under manual stress loading The result is a stable rotational platform ready to support the full articulated structure.'
     },
     4: {
-      img: 'case/3.png',
-      title: 'Embedded Systems Autonomous Control',
-      text: 'The firmware layer handled real-time gas concentration monitoring, threshold-based alert triggering, motion control using encoder feedback, autonomous patrol routines, obstacle handling logic, and GPS coordinate tagging. Wheel displacement tracking followed X=rθ, allowing gas concentration spikes to be mapped to physical coordinates. When abnormal gas levels exceeded calibrated thresholds, the robot automatically slowed down and initiated thermal scanning mode. This prevented overshooting potential leak sources and enabled precise localization.'
+      img: 'arm_case/torque.png',
+      title: 'Actuation Strategy & Torque Planning',
+      text: 'Actuation was selected to match the torque requirements of each joint. The base joint required high-torque motor with precise control, while wrist joints used smaller, faster motors for fine positioning. Torque planning was performed for each joint: τ = r × F Where: 𝑟 is the distance from joint axis to end mass, 𝐹 is gravitational force of the extended arm. Worst-case scenarios were calculated assuming full extension with payload. The motor selection process considered: 1. Required torque output 2. Speed and resolution 3. Thermal and electrical constraints 4. Cost and availability The final actuation system was optimized for both performance and manufacturability.'
     },
     5: {
-      img: 'case/gas.png',
-      title: 'Gas Detection Calibration',
-      text: 'MQ sensors are powerful but unreliable without calibration. Calibration involved baseline ambient air sampling, controlled gas exposure testing, sensitivity curve mapping, and temperature compensation adjustments. Sensor outputs were converted from raw ADC values into ppm estimates using experimentally derived response curves. This phase ensured the system could distinguish between normal plant emissions and actual hazardous leak levels. Detection without calibration is garbage data.'
+      img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80.png',
+      title: 'Electronics Architecture & PCB Design',
+      text: 'TO BE CONTINUED ...'
     },
-    6: {
-      img: 'case/t.png',
-      title: 'Thermal Imaging Leak Localization',
-      text: 'Gas detection tells you something is wrong. Thermal imaging tells you exactly where. The onboard thermal camera continuously scanned for temperature anomalies. Gas leaks often create localized cooling or heating patterns depending on pressure and expansion behavior. Thermal processing included temperature gradient mapping, hotspot segmentation, heat signature thresholding, and coordinate correlation with gas concentration spikes. When both high gas concentration and thermal anomaly overlapped spatially, the system flagged a confirmed leak zone. This dual-sensor fusion reduced false positives dramatically. Gas spike alone equals warning. Gas spike plus thermal anomaly equals actionable event.'
-    },
-    7: {
-      img: 'case/gps.png',
-      title: 'Navigation, Mapping GPS Integration',
-      text: 'The robot operated under semi-autonomous patrol logic. GPS coordinates were logged continuously, mapping movement paths relative to inspection zones. This allowed operators to review patrol routes, identify repeated leak zones, and analyze historical inspection data. Future predictive maintenance becomes possible when data is logged properly. By correlating gas detection events with GPS coordinates, the system created a comprehensive map of leak hotspots and vulnerability areas within the industrial facility.'
-    },
-    8: {
-      img: 'case/5.png',
-      title: 'Web Interface Remote Command System',
-      text: 'This phase transformed the robot from a machine into a deployable industrial system. A web-based control and monitoring interface was developed featuring live gas concentration readings (real-time graphs), thermal camera video stream, interactive map with GPS tracking, leak alert indicators, patrol route visualization, system health diagnostics, and battery monitoring. A Linux-based remote terminal enabled command-line control for advanced debugging and diagnostics. Operators could send movement commands, trigger manual scan mode, access onboard system logs, and execute emergency overrides remotely. The system became truly autonomous yet human-supervised.'
-    }
+    // 6: {
+    //   img: 'case/t.png',
+    //   title: 'Thermal Imaging Leak Localization',
+    //   text: 'Gas detection tells you something is wrong. Thermal imaging tells you exactly where. The onboard thermal camera continuously scanned for temperature anomalies. Gas leaks often create localized cooling or heating patterns depending on pressure and expansion behavior. Thermal processing included temperature gradient mapping, hotspot segmentation, heat signature thresholding, and coordinate correlation with gas concentration spikes. When both high gas concentration and thermal anomaly overlapped spatially, the system flagged a confirmed leak zone. This dual-sensor fusion reduced false positives dramatically. Gas spike alone equals warning. Gas spike plus thermal anomaly equals actionable event.'
+    // },
+    // 7: {
+    //   img: 'case/gps.png',
+    //   title: 'Navigation, Mapping GPS Integration',
+    //   text: 'The robot operated under semi-autonomous patrol logic. GPS coordinates were logged continuously, mapping movement paths relative to inspection zones. This allowed operators to review patrol routes, identify repeated leak zones, and analyze historical inspection data. Future predictive maintenance becomes possible when data is logged properly. By correlating gas detection events with GPS coordinates, the system created a comprehensive map of leak hotspots and vulnerability areas within the industrial facility.'
+    // },
+    // 8: {
+    //   img: 'case/5.png',
+    //   title: 'Web Interface Remote Command System',
+    //   text: 'This phase transformed the robot from a machine into a deployable industrial system. A web-based control and monitoring interface was developed featuring live gas concentration readings (real-time graphs), thermal camera video stream, interactive map with GPS tracking, leak alert indicators, patrol route visualization, system health diagnostics, and battery monitoring. A Linux-based remote terminal enabled command-line control for advanced debugging and diagnostics. Operators could send movement commands, trigger manual scan mode, access onboard system logs, and execute emergency overrides remotely. The system became truly autonomous yet human-supervised.'
+    // }
   };
 
   function openModal(id) {
